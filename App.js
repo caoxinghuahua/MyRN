@@ -5,13 +5,13 @@
  */
 
 import React, { Component } from 'react';
-import {Navigator} from 'react-native-deprecated-custom-components'
+import {Navigator}from 'react-native-deprecated-custom-components'
+import StackNavigator from 'react-navigation';
 import {
   Platform,
   StyleSheet,
   Text,
-  View,
-  Picker
+  TouchableOpacity
 } from 'react-native';
 import Net from './learn/Net';
 import MyListView from './learn/MyListView';
@@ -30,19 +30,42 @@ export default class App extends Component<Props> {
     this.state={language:null};
   }
   render() {
-    let rootViewName='MyListView';
-    let rootComponent=MyListView;
-    return (
-      <Navigator
-       initialRoute={{name:rootViewName,component:rootComponent}}
-       configureScene = {(route) => {
-           return Navigator.SceneConfigs.HorizontalSwipeJump ;
-       }}
-       renderScene = {(route, navigator) => {
-           let Component = route.component;
-           return <Component {...route.params} navigator = {navigator} />
-       }} />
-    );
+     let type=1;
+     if(type==1){
+         let rootViewName='MyListView';
+         let rootComponent=MyListView;
+         return (
+             <Navigator
+                 initialRoute={{name:rootViewName,component:rootComponent}}
+                 configureScene = {(route) => {
+                     return Navigator.SceneConfigs.HorizontalSwipeJump ;
+                 }}
+                 renderScene = {(route, navigator) => {
+                     let Component = route.component;
+                     return <Component {...route.params} navigator = {navigator} />
+                 }}
+             />
+         );
+     }else{
+
+     }
+  }
+  _routerMap={
+    LeftButton:(route,navigator,index,navState)=>{
+      if(index>0){
+          return(<TouchableOpacity onPress={()=>navigator.pop()}>
+              <Text><Icon size={18} name='ios-arrow-back'></Icon>back</Text>
+          </TouchableOpacity>);
+      }
+    },
+    RightButton:(route,navigator,index,navState)=>{
+      return null;
+    },
+    Title:(route,navigator,index,navState)=>{
+      return(
+          <Text>{navigator.title}</Text>
+      );
+    }
   }
 }
 
