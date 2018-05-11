@@ -200,7 +200,7 @@ export default class MyListView extends Component {
                 }
             )
         } else {
-            alert("null");
+            this.props.navigation.navigate('Detail',{des:rowData});
         }
     }
     //分割线

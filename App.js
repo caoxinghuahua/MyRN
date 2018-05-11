@@ -6,16 +6,21 @@
 
 import React, { Component } from 'react';
 import {Navigator}from 'react-native-deprecated-custom-components'
-import StackNavigator from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
 import {
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Button,
+  View
 } from 'react-native';
 import Net from './learn/Net';
 import MyListView from './learn/MyListView';
-
+import Second from './learn/Second';
+import Detail from './learn/Detail';
+import Main from './learn/Main';
+import MyListViewNav from './learn/MyListViewNav';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -24,13 +29,54 @@ const instructions = Platform.select({
 });
 
 type Props = {};
+
+
+const Nav=StackNavigator({
+    MyListView:{screen:MyListView},
+    Detail:{screen:Detail},
+    Second:{screen:Second}
+},{
+    navigationOptions:{
+        headerBackTitle:null,
+        headerTintColor:'#333333',
+        title:'MyListView',
+        style:{
+            flex:1,
+            alignItems:'center',
+            backgroundColor:'#ffffff',
+            justifyContent:'center'
+
+        },
+        titleStyle:{
+            titleColor:'#000000',
+            alignSelf:'center',
+
+        },
+        headerRight:(<View style={{
+            marginLeft:5,
+            marginRight:5
+          }
+        } >
+        <Button title='Right'
+                    style={{backgroundColor:null}}
+                    onPress={()=>alert("click right")}
+            />
+        </View>),
+
+        showIcon:true,
+        mode:'modal',
+        headerMode:'screen',
+        initialRouteName:'MylistView',
+        gesturesEnabled:true //滑动返回
+    }
+});
 export default class App extends Component<Props> {
   constructor(props){
     super(props);
     this.state={language:null};
   }
   render() {
-     let type=1;
+     let type=3;
      if(type==1){
          let rootViewName='MyListView';
          let rootComponent=MyListView;
@@ -46,8 +92,10 @@ export default class App extends Component<Props> {
                  }}
              />
          );
-     }else{
-
+     }else if(type==2){
+         return (<Nav/>);
+     }else {
+         return(<MyListViewNav/>);
      }
   }
   _routerMap={

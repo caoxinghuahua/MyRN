@@ -1,4 +1,4 @@
-   import React,{Component} from 'react';
+import React,{Component} from 'react';
 import {
     View,
     Image,
@@ -6,9 +6,13 @@ import {
 } from 'react-native';
 
 export default class Detail extends Component{
+    static navaigationOptions=((navigation)=>{
+        title:'DeTail'
+    });
     constructor(props){
         super(props);
         this.state={
+           // des:this.props.navigation.state.params.des
             des:this.props.des
         }
     }
